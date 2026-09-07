@@ -1,0 +1,14 @@
+@use '../scss/abstracts/variables' as *;
+@use '../scss/abstracts/mixin' as *;
+
+body {
+    margin: 0;
+
+    @include tablet {
+        
+    }
+
+    @include phone {
+      
+    }
+}
