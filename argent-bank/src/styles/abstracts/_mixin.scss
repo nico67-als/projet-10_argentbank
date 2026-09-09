@@ -13,3 +13,29 @@
         @content;
     }
 }
+
+
+@mixin from($size) {
+    @media (min-width: $size) {
+        @content;
+    }
+}
+
+
+@mixin green-button {
+    font-family: inherit;
+    font-weight: bold;
+    border: none;
+    background-color: $color-primary;
+    color: $color-light;
+}
+
+
+@mixin block-button {
+    @include green-button;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}

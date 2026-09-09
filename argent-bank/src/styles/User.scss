@@ -1,0 +1,12 @@
+@use '../styles/abstracts/variables' as *;
+@use '../styles/abstracts/mixin' as *;
+
+.header {
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.edit-button {
+  @include green-button;
+  padding: 10px;
+}

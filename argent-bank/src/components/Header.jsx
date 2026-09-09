@@ -16,7 +16,7 @@ const Header = () => {
             <div>
                 <Link to='/sign-in' className="main-nav-item">
                     <i className="fa fa-user-circle"></i>
-                    Sign In
+                    {' '}Sign In
                 </Link>
             </div>
         </header>
