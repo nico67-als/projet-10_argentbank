@@ -7,10 +7,9 @@ export const getUserProfile = createAsyncThunk(
     async (_, { getState, rejectWithValue }) => {
         const { token } = getState().auth
 
-        const reponse = await fetch(`${API_URL}/user/profile`, {
-            method: 'POST',
+        const response = await fetch(`${API_URL}/user/profile`, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
         })
@@ -50,7 +49,7 @@ const userSlice = createSlice({
             .addCase(getUserProfile.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.firstName = action.payload.firstName
-                state.lastName = action.payload.email
+                state.lastName = action.payload.lastName
             })
             .addCase(getUserProfile.rejected, (state, action) => {
                 state.status = 'failed'
