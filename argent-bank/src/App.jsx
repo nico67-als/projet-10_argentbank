@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import PrivateRoute from './components/PrivateRoute'
 import Index from './pages/Index'
 import SignIn from './pages/SignIn'
 import User from './pages/User'
@@ -12,7 +13,9 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Index />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/user" element={<User />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/user" element={<User />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
