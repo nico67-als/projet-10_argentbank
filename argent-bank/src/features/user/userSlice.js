@@ -24,11 +24,36 @@ export const getUserProfile = createAsyncThunk(
     }
 )
 
+export const updateUserName = createAsyncThunk(
+    'user/updateUserName',
+    async (userName, { getState, rejectWithValue }) => {
+        const { token } = getState().auth
+
+        const response = await fetch(`${API_URL}/user/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ userName }),
+        })
+
+        if (!response.ok) {
+            const error = await response.json()
+            return rejectWithValue(error.message)
+        }
+
+        const data = await response.json()
+        return data.body
+    }
+)
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         firstName: null,
         lastName: null,
+        userName: null,
         email: null,
         status: 'idle',
         error: null,
@@ -50,13 +75,25 @@ const userSlice = createSlice({
                 state.status = 'succeeded'
                 state.firstName = action.payload.firstName
                 state.lastName = action.payload.lastName
+                state.userName = action.payload.userName
             })
             .addCase(getUserProfile.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload
+            })
+            .addCase(updateUserName.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(updateUserName.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.userName = action.payload.userName
+            })
+            .addCase(updateUserName.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload
             })
     }
 })
 
-export const { clearUser } = userSlice.actions 
+export const { clearUser } = userSlice.actions
 export default userSlice.reducer

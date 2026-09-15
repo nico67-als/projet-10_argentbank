@@ -7,7 +7,8 @@ import { logout } from '../features/auth/authSlice'
 const Header = () => {
     const dispatch = useDispatch()
     const token = useSelector((state) => state.auth.token)
-    const firstName = useSelector((state) => state.user.firstName)
+    const { firstName, userName } = useSelector((state) => state.user)
+    const displayName = userName || firstName
 
     const handleLogout = () => {
         dispatch(logout())
@@ -28,7 +29,7 @@ const Header = () => {
                     <>
                         <Link to='/user' className="main-nav-item">
                             <i className="fa fa-user-circle"></i>
-                            {' '}{firstName}
+                            {' '}{displayName}
                         </Link>
                         <Link to='/' className="main-nav-item" onClick={handleLogout}>
                             <i className="fa fa-sign-out"></i>
