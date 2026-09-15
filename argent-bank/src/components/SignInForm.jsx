@@ -7,6 +7,7 @@ import '../styles/SignInForm.scss'
 const SignInForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [rememberMe, setRememberMe] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ const SignInForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const result = await dispatch(login({ email, password }))
+        const result = await dispatch(login({ email, password, rememberMe }))
         if (login.fulfilled.match(result)) {
             navigate('/user')
         }
@@ -41,7 +42,12 @@ const SignInForm = () => {
                 />
             </div>
             <div className="input-remember">
-                <input type="checkbox" id="remember-me" />
+                <input
+                    type="checkbox"
+                    id="remember-me"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
             {status === 'failed' && <p className="error-message">{error}</p>}
