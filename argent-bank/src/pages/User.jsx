@@ -1,10 +1,17 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserProfile } from '../features/user/userSlice'
 import AccountItem from '../components/AccountItem'
 import accounts from '../data/accounts'
 import '../styles/User.scss'
 
 const User = () => {
-    const firstName = 'Tony'
-    const lastName = 'Jarvis'
+    const dispatch = useDispatch()
+    const { firstName, lastName } = useSelector((state) => state.user)
+
+    useEffect(() => {
+        dispatch(getUserProfile())
+    }, [dispatch])
 
     return (
         <main className="main bg-dark">
