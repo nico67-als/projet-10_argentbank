@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { logout } from '../auth/authSlice'
 
 const API_URL = 'http://localhost:3001/api/v1'
 
@@ -14,7 +15,7 @@ export const getUserProfile = createAsyncThunk(
             },
         })
 
-        if(!response.ok) {
+        if (!response.ok) {
             const error = await response.json()
             return rejectWithValue(error.message)
         }
@@ -48,26 +49,21 @@ export const updateUserName = createAsyncThunk(
     }
 )
 
+const initialState = {
+    firstName: null,
+    lastName: null,
+    userName: null,
+    status: 'idle',
+    error: null,
+}
+
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        firstName: null,
-        lastName: null,
-        userName: null,
-        email: null,
-        status: 'idle',
-        error: null,
-    },
-    reducers: {
-        clearUser(state) {
-            state.firstName = null
-            state.lastName = null
-            state.email = null
-            state.status = 'idle'
-        },
-    },
+    initialState,
+    reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(logout, () => initialState)
             .addCase(getUserProfile.pending, (state) => {
                 state.status = 'loading'
             })
@@ -95,5 +91,4 @@ const userSlice = createSlice({
     }
 })
 
-export const { clearUser } = userSlice.actions
 export default userSlice.reducer
