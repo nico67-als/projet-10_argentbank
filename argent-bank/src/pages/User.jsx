@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserProfile, updateUserName } from '../features/user/userSlice'
+import { updateUserName } from '../features/user/userSlice'
 import AccountItem from '../components/AccountItem'
 import accounts from '../data/accounts'
 import '../styles/User.scss'
@@ -11,11 +11,7 @@ const User = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [nameInput, setNameInput] = useState('')
 
-    useEffect(() => {
-        dispatch(getUserProfile())
-    }, [dispatch])
-
-    const displayName = userName || `${firstName} ${lastName}`
+    const displayName = userName || (firstName ? `${firstName} ${lastName}` : '')
 
     const handleEditClick = () => {
         setNameInput(userName || '')

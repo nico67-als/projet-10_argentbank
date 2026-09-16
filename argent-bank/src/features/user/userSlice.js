@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:3001/api/v1'
 
 export const getUserProfile = createAsyncThunk(
     'user/getProfile',
-    async (_, { getState, rejectWithValue }) => {
+    async (_, { getState, dispatch, rejectWithValue }) => {
         const { token } = getState().auth
 
         const response = await fetch(`${API_URL}/user/profile`, {
@@ -14,6 +14,11 @@ export const getUserProfile = createAsyncThunk(
                 Authorization: `Bearer ${token}`,
             },
         })
+
+        if (response.status === 401) {
+            dispatch(logout())
+            return rejectWithValue('Session expired, please sign in again')
+        }
 
         if (!response.ok) {
             const error = await response.json()
@@ -27,7 +32,7 @@ export const getUserProfile = createAsyncThunk(
 
 export const updateUserName = createAsyncThunk(
     'user/updateUserName',
-    async (userName, { getState, rejectWithValue }) => {
+    async (userName, { getState, dispatch, rejectWithValue }) => {
         const { token } = getState().auth
 
         const response = await fetch(`${API_URL}/user/profile`, {
@@ -38,6 +43,11 @@ export const updateUserName = createAsyncThunk(
             },
             body: JSON.stringify({ userName }),
         })
+
+        if (response.status === 401) {
+            dispatch(logout())
+            return rejectWithValue('Session expired, please sign in again')
+        }
 
         if (!response.ok) {
             const error = await response.json()
