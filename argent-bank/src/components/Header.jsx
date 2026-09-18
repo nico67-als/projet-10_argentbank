@@ -1,5 +1,5 @@
 import '../styles/Header.scss'
-import logo from '../assets/images/argentBankLogo.png'
+import logo from '../assets/images/argentBankLogo.webp'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
