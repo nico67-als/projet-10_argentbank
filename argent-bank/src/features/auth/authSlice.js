@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
         const data = await response.json()
         const token = data.body.token
 
-        if(rememberMe) {
+        if (rememberMe) {
             localStorage.setItem('token', token)
         } else {
             sessionStorage.setItem('token', token)
@@ -40,8 +40,6 @@ const authSlice = createSlice({
     },
     reducers: {
         logout(state) {
-            localStorage.removeItem('token')
-            sessionStorage.removeItem('token')
             state.token = null
             state.status = 'idle'
             state.error = null
@@ -65,4 +63,9 @@ const authSlice = createSlice({
 })
 
 export const { logout } = authSlice.actions
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem('token')
+    sessionStorage.removeItem('token')
+    dispatch(logout())
+}
 export default authSlice.reducer

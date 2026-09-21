@@ -2,7 +2,7 @@ import '../styles/Header.scss'
 import logo from '../assets/images/argentBankLogo.webp'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../features/auth/authSlice'
+import { logoutUser } from '../features/auth/authSlice'
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -11,7 +11,7 @@ const Header = () => {
     const displayName = userName || firstName
 
     const handleLogout = () => {
-        dispatch(logout())
+        dispatch(logoutUser())
     }
 
     return (

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { logout } from '../auth/authSlice'
+import { logout, logoutUser } from '../auth/authSlice'
 
 const API_URL = 'http://localhost:3001/api/v1'
 
@@ -16,7 +16,7 @@ export const getUserProfile = createAsyncThunk(
         })
 
         if (response.status === 401) {
-            dispatch(logout())
+            dispatch(logoutUser())
             return rejectWithValue('Session expired, please sign in again')
         }
 
@@ -45,7 +45,7 @@ export const updateUserName = createAsyncThunk(
         })
 
         if (response.status === 401) {
-            dispatch(logout())
+            dispatch(logoutUser())
             return rejectWithValue('Session expired, please sign in again')
         }
 
